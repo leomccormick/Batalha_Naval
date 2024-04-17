@@ -53,6 +53,7 @@ def ColoreMatriz(Matriz):
                 Cor[-1] += ['\033[31o\033[0m']
             elif j == -2:
                 Cor[-1] += ['\034[32o\033[0m']
+    return Cor
 
 def DefineBarcosBot():
     Matriz = MatrizPadrao
@@ -127,10 +128,11 @@ def DefineBarcos():
                         Passou = False
                         for i in range(barco[1]):
                             Matriz[linha+i][coluna] = 1
-        MatrizShow = [[]]
-        
-        for i in range(len(ColoreMatriz(Matriz))):
-            print([i+1]+[MatrizShow[i]]+[i+1])
+        X = ColoreMatriz(Matriz)
+        print(ListaLetras)
+        for i in range(len(X)):
+            print([[i+1]]+[X[i]]+[[i+1]])
+        print(ListaLetras)
     return Matriz
 
 MatrizPlayer = DefineBarcos()
