@@ -100,7 +100,7 @@ def DefineBarcos():
         Passou = True
         while Passou:
             linha = int(input('Qual linha? (1 - 10)')) - 1
-            coluna = LpN[input('Qual linha? (A - J)')] - 1
+            coluna = LpN[input('Qual coluna? (A - J)')] - 1
             orientacao = input('Qual orientação? (h ou v)')
             if orientacao == 'h':
                 OverLap = False
