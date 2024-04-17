@@ -17,12 +17,19 @@ while game:
     'I' : 9,
     'J' : 10,
 }
-    ListaLetras = ['N', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'N']
-    print('\u001b[34m'+'o'+'\u001b[0m')
-    #'\033[31m{0}\033[0m'.format('VERMELHO')
-    #'\033[32m{0}\033[0m'.format('VERDE')
-    #'\033[34m{0}\033[0m'.format('AZUL')
-    #'\033[30m{0}\033[0m'.format('CINZA')
+    CORES = {
+    'reset': '\u001b[0m',
+    'red': '\u001b[31m',
+    'black': '\u001b[30m',
+    'green': '\u001b[32m',
+    'yellow': '\u001b[33m',
+    'blue': '\u001b[34m',
+    'magenta': '\u001b[35m',
+    'cyan': '\u001b[36m',
+    'white': '\u001b[37m'
+}
+    ListaLetras = 'N   A    B    C    D    E    F    G    H    I    J   N'
+
     LP = ['Japão', 'Rússia', 'Austrália', 'França', 'Brasil']
     PAISES =  {
         'Brasil': {
@@ -83,21 +90,6 @@ while game:
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0]]
 
-    def ColoreMatriz(Matriz):
-        Cor = []
-        for i in Matriz:
-            Cor += [[]]
-            for j in i:
-                if j == 1:
-                    Cor[-1] += ['\u001b[32m'+'▓']
-                elif j == 0:
-                    Cor[-1] += ['\u001b[30m'+'▓']
-                elif j == -1:
-                    Cor[-1] += ['\u001b[33m'+'▓']
-                elif j == -2:
-                    Cor[-1] += ['\u001b[34m'+'▓']
-        return Cor
-
     def DefineBarcosBot():
         Matriz = MatrizPadrao
         for barco in Barcos:
@@ -140,7 +132,7 @@ while game:
         Matriz = MatrizPadrao
         Y = True
         while Y:
-            pais = input('Qual país você quer ser? (Japão, Rússia, Austrália, França, Brasil)')
+            pais = input('Qual país você quer ser? (Japão, Rússia, Austrália, França, Brasil) : ')
             if pais in LP:
                 Y = False
             else:
@@ -149,9 +141,9 @@ while game:
             print('{0} possui {1} de tamanho'.format(barco, Barcos[barco]))
             Passou = True
             while Passou:
-                linha = int(input('Qual linha? (1 - 10)')) - 1
-                coluna = LpN[input('Qual linha? (A - J)')] - 1
-                orientacao = input('Qual orientação? (h ou v)')
+                linha = int(input('Qual linha? (1 - 10) : ')) - 1
+                coluna = LpN[input('Qual linha? (A - J) : ')] - 1
+                orientacao = input('Qual orientação? (h ou v) : ')
                 if orientacao == 'h':
                     OverLap = False
                     if Barcos[barco] + coluna > 10:
@@ -180,10 +172,26 @@ while game:
                                 Matriz[linha+i][coluna] = 1
                 else:
                     print('indisponível')
-            X = ColoreMatriz(Matriz)
             print(ListaLetras)
-            for i in range(len(X)):
-                print([[i+1]]+[Matriz[i]]+[[i+1]])
+            for i in range(len(Matriz)):
+                if i <9:
+                    t = ' '+str(i+1)
+                else:
+                    t = str(i+1)
+                for j in Matriz[i]:
+                    if j == 1:
+                        t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
+                    elif j == 0:
+                        t += CORES['black']+'▓▓▓▓▓'+CORES['reset']
+                    elif j == -1:
+                        t += CORES['red']+'▓▓▓▓▓'+CORES['reset']
+                    elif j == -2:
+                        t += CORES['blue']+'▓▓▓▓▓'+CORES['reset']
+                if i <9:
+                    t += ' '+str(i+1)
+                else:
+                    t += str(i+1)
+                print(t)
             print(ListaLetras)
         return Matriz
 
@@ -222,4 +230,4 @@ while game:
         # Ver se Bot ganhou - game = False
         #x = 0
     
-    game = input('Jogar novamente? (Sim ou Não)') == 'Sim'
+    game = input('Jogar novamente? (Sim ou Não) : ') == 'Sim'
