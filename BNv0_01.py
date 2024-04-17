@@ -19,7 +19,15 @@ print('\033[31m{0}\033[0m'.format('VERMELHO')+'\n'+'\033[32m{0}\033[0m'.format('
 #'\033[34m{0}\033[0m'.format('AZUL')
 #'\033[30m{0}\033[0m'.format('CINZA')
 
-Barcos = [['oi', 2], ['tchau', 5]]
+Barcos = [
+    ['destroyer', 3], 
+    ['porta-avioes', 5], 
+    ['submarino', 2], 
+    ['torpedeiro', 3], 
+    ['cruzador', 2], 
+    ['couracado', 4]
+    ]
+
 
 MatrizPadrao = [[0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
