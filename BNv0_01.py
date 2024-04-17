@@ -221,13 +221,13 @@ while game:
     Acao = True
     for i in range(len(MatrizBot)):
         print([[i+1]], [MatrizBot[i]],[[i+1]], [MatrizPlayer[i]], [[i+1]])
-    #while game:
+    #while Acao:
         # Mostrar Tabuleiro
         # Pedir Tiro
         # Mostrar Tabuleiro
-        # Ver se Player ganhou - game = False
+        # Ver se Player ganhou - Acao = False
         # Tiro do Bot
-        # Ver se Bot ganhou - game = False
+        # Ver se Bot ganhou - Acao = False
         #x = 0
     
     game = input('Jogar novamente? (Sim ou Não) : ') == 'Sim'
