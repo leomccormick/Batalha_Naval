@@ -219,8 +219,43 @@ while game:
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0]]
     Acao = True
-    for i in range(len(MatrizBot)):
-        print([[i+1]], [MatrizBot[i]],[[i+1]], [MatrizPlayer[i]], [[i+1]])
+    for i in range(len(MatrizPlayer)):
+        if i <9:
+            t = ' '+str(i+1)
+        else:
+            t = str(i+1)
+        for j in MatrizObservada[i]:
+            if j == 1:
+                t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
+            elif j == 0:
+                t += CORES['black']+'▓▓▓▓▓'+CORES['reset']
+            elif j == -1:
+                t += CORES['red']+'▓▓▓▓▓'+CORES['reset']
+            elif j == -2:
+                t += CORES['blue']+'▓▓▓▓▓'+CORES['reset']
+        if i <9:
+            t += ' '+str(i+1)
+        else:
+            t += str(i+1)
+        t += '     '
+        if i <9:
+            t += ' '+str(i+1)
+        else:
+            t = str(i+1)
+        for j in MatrizPlayer[i]:
+            if j == 1:
+                t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
+            elif j == 0:
+                t += CORES['black']+'▓▓▓▓▓'+CORES['reset']
+            elif j == -1:
+                t += CORES['red']+'▓▓▓▓▓'+CORES['reset']
+            elif j == -2:
+                t += CORES['blue']+'▓▓▓▓▓'+CORES['reset']
+        if i <9:
+            t += ' '+str(i+1)
+        else:
+            t += str(i+1)
+        print(t)
     #while Acao:
         # Mostrar Tabuleiro
         # Pedir Tiro
