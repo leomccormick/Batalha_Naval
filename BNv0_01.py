@@ -345,12 +345,12 @@ while game:
         # Tiro do Bot
         print('Vez do seu oponente atirar!')
         print('Seu oponente está pensando...')
-        # print(3...)
-        # time.sleep(1)
-        # print(2...)
-        # time.sleep(1)
-        # print(1...)
-        # time.sleep(1)
+        print('3...')
+        time.sleep(1)
+        print('2...')
+        time.sleep(1)
+        print('1...')
+        time.sleep(1)
 
        
         nao_passou = True
