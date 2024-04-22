@@ -52,7 +52,7 @@ def mostra_tabuleiros():
 def foi_derrotado(m):
     for i in m:
         for j in i:
-            if j == '1':
+            if j == 1:
                 return False
     return True
 
