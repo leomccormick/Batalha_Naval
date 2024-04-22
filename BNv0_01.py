@@ -64,16 +64,16 @@ def ve_se_ganhou(matriz):
     return True
 
 LpN = {
-    'A' : 1,
-    'B' : 2,
-    'C' : 3,
-    'D' : 4,
-    'E' : 5,
-    'F' : 6,
-    'G' : 7,
-    'H' : 8,
-    'I' : 9,
-    'J' : 10,
+'A' : 1,
+'B' : 2,
+'C' : 3,
+'D' : 4,
+'E' : 5,
+'F' : 6,
+'G' : 7,
+'H' : 8,
+'I' : 9,
+'J' : 10,
 }
 CORES = {
 'reset': '\u001b[0m',
@@ -88,53 +88,54 @@ CORES = {
 }
 ListaLetras = 'N   A    B    C    D    E    F    G    H    I    J   N'
 Letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+ListaNumeros = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 LP = ['Japão', 'Rússia', 'Austrália', 'França', 'Brasil']
 PAISES =  {
     'Brasil': {
-        'cruzador': 1,
-        'torpedeiro': 2,
-        'destroyer': 1,
-        'couracado': 1,
-        'porta-avioes': 1
+    'Cruzador': 1,
+    'Torpedeiro': 2,
+    'Destroyer': 1,
+    'Couraçado': 1,
+    'Porta-avioes': 1
     }, 
     'França': {
-    'cruzador': 3, 
-    'porta-avioes': 1, 
-    'destroyer': 1, 
-    'submarino': 1, 
-    'couracado': 1
+    'Cruzador': 3, 
+    'Porta-avioes': 1, 
+    'Destroyer': 1, 
+    'Submarino': 1, 
+    'Couraçado': 1
     },
     'Austrália': {
-    'couracado': 1,
-    'cruzador': 3, 
-    'submarino': 1,
-    'porta-avioes': 1, 
-    'torpedeiro': 1
+    'Couraçado': 1,
+    'Cruzador': 3, 
+    'Submarino': 1,
+    'Porta-avioes': 1, 
+    'Torpedeiro': 1
     },
     'Rússia': {
-    'cruzador': 1,
-    'porta-avioes': 1,
-    'couracado': 2,
-    'destroyer': 1,
-    'submarino': 1
+    'Cruzador': 1,
+    'Porta-avioes': 1,
+    'Couraçado': 2,
+    'Destroyer': 1,
+    'Submarino': 1
     },
     'Japão': {
-    'torpedeiro': 2,
-    'cruzador': 1,
-    'destroyer': 2,
-    'couracado': 1,
-    'submarino': 1
+    'Torpedeiro': 2,
+    'Cruzador': 1,
+    'Destroyer': 2,
+    'Couraçado': 1,
+    'Submarino': 1
     }
 }
 
 Barcos = {
-'destroyer': 3,
-'porta-avioes': 5,
-'submarino': 2,
-'torpedeiro': 3,
-'cruzador': 2,
-'couracado': 4
+'Destroyer': 3,
+'Porta-avioes': 5,
+'Submarino': 2,
+'Torpedeiro': 3,
+'Cruzador': 2,
+'Couraçado': 4
 }
 
 
@@ -155,7 +156,7 @@ def DefineBarcosBot(pais_player):
     while pais_certo:
         p = random.choice(LP)
         pais_certo = p == pais_player
-    print('O inimigo irá de {0}'.format(p))
+    print('O oponente vai jogar como de {0}'.format(p))
     for barco in PAISES[p]: 
         Passou = True
         while Passou:
@@ -199,34 +200,31 @@ def DefineBarcos(pais_player):
         print('{0} possui {1} de tamanho'.format(barco, Barcos[barco]))
         Passou = True
         while Passou:
-            #linha
+            #linha e coluna
             errado = True
             while errado:
-                linha = input('Qual linha? (1 - 10): ')
-                if linha in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']:
-                    linha = int(linha)-1
+                posicao = input("Escolha onde será a posição (LN): ")
+                linha = int(posicao[1])-1
+                coluna = posicao[0]
+                if len(posicao) == 3:
+                    linha = int(posicao[1] + posicao[2])-1
+                if linha in range(10) and coluna in Letras:
+                    linha = int(linha)
+                    coluna = LpN[coluna[0]]-1
                     errado = False
                 else:
                     print('Digitado errado')
-            #coluna
-            errado = True
-            while errado:
-                coluna = input('Qual coluna? (A - J): ')
-                if coluna in Letras: 
-                    coluna = LpN[coluna]-1
-                    errado = False
-                else: 
-                    print('Digitado errado')
+            
             #orientação
             orientacao = input('Qual orientação? (h ou v): ')
             if orientacao == 'h' or orientacao == 'H':
                 OverLap = False
                 if Barcos[barco] + coluna > 10:
-                    print('indisponível')
+                    print('Indisponível')
                 else:
                     for i in range(Barcos[barco]):
                         if Matriz[linha][coluna+i] != 0:
-                            print('indisponível')
+                            print('Indisponível')
                             OverLap = True
                     if OverLap == False:
                         Passou = False
@@ -235,18 +233,18 @@ def DefineBarcos(pais_player):
             elif orientacao == 'v' or orientacao == 'V':
                 OverLap = False
                 if Barcos[barco] + linha > 10:
-                    print('indisponível')
+                    print('Indisponível')
                 else:
                     for i in range(Barcos[barco]):
                         if Matriz[linha+i][coluna] != 0:
-                            print('indisponível')
+                            print('Indisponível')
                             OverLap = True
                     if OverLap == False:
                         Passou = False
                         for i in range(Barcos[barco]):
                             Matriz[linha+i][coluna] = 1
             else:
-                print('indisponível')
+                print('Digitado errado')
         print(ListaLetras)
         for i in range(len(Matriz)):
             if i <9:
@@ -279,7 +277,7 @@ while game:
         if pais_player in LP:
             Y = False
         else:
-            print('País indisponível')
+            print('País Indisponível')
 
     MatrizPlayer = DefineBarcos(pais_player)
     MatrizPadrao = [[0,0,0,0,0,0,0,0,0,0],
@@ -311,22 +309,17 @@ while game:
         print('Sua vez de atirar!')
         nao_passou = True
         while nao_passou:
-
             errado = True
             while errado:
-                linha = input('Escolha uma linha (1-10): ')
-                if linha in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']:
+                tiro = input("Escolha onde será o tiro (LN): ")
+                linha = tiro[1]
+                coluna = tiro[0]
+                if len(tiro) == 3:
+                    linha = tiro[1] + tiro[2]
+                if linha in ListaNumeros and coluna in Letras:
                     linha = int(linha)
                     errado = False
                 else:
-                    print('Digitado errado')
-
-            errado = True
-            while errado:
-                coluna = input('Escolha uma coluna (A-J): ')
-                if coluna in Letras: 
-                    errado = False
-                else: 
                     print('Digitado errado')
 
             if Tiro(MatrizBot, linha, coluna) == 'Isso já foi selecionado\nTente novamente':
@@ -349,15 +342,17 @@ while game:
             print('Você ganhou!')
             Acao = False
 
-        print(3)
-        time.sleep(1)
-        print(2)
-        time.sleep(1)
-        print(1)
-        time.sleep(1)
-
         # Tiro do Bot
-        print('Vez do seu oponente atirar...')
+        print('Vez do seu oponente atirar!')
+        print('Seu oponente está pensando...')
+        # print(3...)
+        # time.sleep(1)
+        # print(2...)
+        # time.sleep(1)
+        # print(1...)
+        # time.sleep(1)
+
+       
         nao_passou = True
         while nao_passou:
             linha = random.choice(range(1, 11))
@@ -387,5 +382,3 @@ while game:
             game = False
         else:
             print('Digitado errado')
-
-# jogar direto 'C4' ao invés de 'C' depois '4'
