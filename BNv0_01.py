@@ -149,9 +149,12 @@ MatrizPadrao = [[0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0]]
 
-def DefineBarcosBot():
+def DefineBarcosBot(pais_player):
     Matriz = MatrizPadrao
-    p = random.choice(LP)
+    pais_certo = True
+    while pais_certo:
+        p = random.choice(LP)
+        pais_certo = p == pais_player
     print('O inimigo irá de {0}'.format(p))
     for barco in PAISES[p]: 
         Passou = True
@@ -189,22 +192,32 @@ def Tiro(Matriz, Linha, Coluna):
     elif Matriz[Linha-1][LpN[Coluna]-1] == 1:
         return 'BOOOOOM! Um navio foi acertado'
 
-def DefineBarcos():
+def DefineBarcos(pais_player):
     Matriz = MatrizPadrao
-    Y = True
-    while Y:
-        pais = input('Qual país você quer ser? (Japão, Rússia, Austrália, França, Brasil): ')
-        if pais in LP:
-            Y = False
-        else:
-            print('País indisponível')
     print('Agora vamos posicionar os seus barcos.')
-    for barco in PAISES[pais]:
+    for barco in PAISES[pais_player]:
         print('{0} possui {1} de tamanho'.format(barco, Barcos[barco]))
         Passou = True
         while Passou:
-            linha = int(input('Qual linha? (1 - 10) : ')) - 1
-            coluna = LpN[input('Qual linha? (A - J) : ')] - 1
+            #linha
+            errado = True
+            while errado:
+                linha = input('Qual linha? (1 - 10): ')
+                if linha in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']:
+                    linha = int(linha)-1
+                    errado = False
+                else:
+                    print('Digitado errado')
+            #coluna
+            errado = True
+            while errado:
+                coluna = input('Qual coluna? (A - J): ')
+                if coluna in Letras: 
+                    coluna = LpN[coluna]-1
+                    errado = False
+                else: 
+                    print('Digitado errado')
+            #orientação
             orientacao = input('Qual orientação? (h ou v): ')
             if orientacao == 'h' or orientacao == 'H':
                 OverLap = False
@@ -259,8 +272,16 @@ def DefineBarcos():
 
 game = True
 while game:
+    # definir pais do player
+    Y = True
+    while Y:
+        pais_player = input('Qual país você quer ser? (Japão, Rússia, Austrália, França, Brasil): ')
+        if pais_player in LP:
+            Y = False
+        else:
+            print('País indisponível')
 
-    MatrizPlayer = DefineBarcos()
+    MatrizPlayer = DefineBarcos(pais_player)
     MatrizPadrao = [[0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
@@ -271,7 +292,7 @@ while game:
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0]]
-    MatrizBot = DefineBarcosBot()
+    MatrizBot = DefineBarcosBot(pais_player)
 
     MatrizObservada = [[0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
@@ -290,8 +311,24 @@ while game:
         print('Sua vez de atirar!')
         nao_passou = True
         while nao_passou:
-            linha = int(input('Escolha uma linha (1-10): '))
-            coluna = str(input('Escolha uma linha (A-J): '))
+
+            errado = True
+            while errado:
+                linha = input('Escolha uma linha (1-10): ')
+                if linha in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']:
+                    linha = int(linha)
+                    errado = False
+                else:
+                    print('Digitado errado')
+
+            errado = True
+            while errado:
+                coluna = input('Escolha uma coluna (A-J): ')
+                if coluna in Letras: 
+                    errado = False
+                else: 
+                    print('Digitado errado')
+
             if Tiro(MatrizBot, linha, coluna) == 'Isso já foi selecionado\nTente novamente':
                 nao_passou = True
                 print('Isso já foi selecionado\nTente novamente')
@@ -332,5 +369,17 @@ while game:
         if foi_derrotado(MatrizPlayer):
             print('Você perdeu...')
             Acao = False
-    
-    game = input('Jogar novamente? (Sim ou Não): ') == 'Sim'
+
+    jogar_novamente = True
+    while jogar_novamente:
+        x = input('Jogar novamente? (Sim ou Não): ')
+        if x == 'Sim':
+            jogar_novamente = False
+        elif x == 'Não':
+            jogar_novamente = False
+            game = False
+        else:
+            print('Digitado errado')
+
+# temporizador pra jogada do bot
+# jogar direto 'C4' ao invés de 'C' depois '4'
