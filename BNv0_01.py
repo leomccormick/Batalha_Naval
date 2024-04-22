@@ -1,5 +1,11 @@
 import random
 
+# Valores e cores do mapa
+# Vazio = Preto = 0
+# Barco existente = Verde = 1
+# Barco atingido = Vermelho = -1
+# Água atingida = Azul = -2
+
 def mostra_tabuleiros():
     print(ListaLetras + '     ' + ListaLetras)
     t = ''
@@ -270,8 +276,8 @@ while game:
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0]]
-    Acao = True
     
+    Acao = True
     while Acao:
         # Pedir Tiro
         print('Sua vez de atirar!')
@@ -286,12 +292,20 @@ while game:
                 print('Shuaaaaa ... água')
                 MatrizBot[linha-1][LpN[coluna]-1] = -2
                 MatrizObservada[linha-1][LpN[coluna]-1] = -2
+                nao_passou = False
             else:
                 print('BOOOOOM! Um navio foi acertado')
                 MatrizBot[linha-1][LpN[coluna]-1] = -1
                 MatrizObservada[linha-1][LpN[coluna]-1] = -1
+                nao_passou = False
         mostra_tabuleiros()
         # Ver se Player ganhou - Acao = False
+        verifica_se_ganhou = True
+        while verifica_se_ganhou:
+            for i in MatrizBot:
+                if 1 in i:
+                    verifica_se_ganhou = False
+
         # Tiro do Bot
         print('Vez do seu oponente atirar...')
         nao_passou = True
@@ -302,8 +316,10 @@ while game:
                 nao_passou = True
             elif Tiro(MatrizPlayer, linha, coluna) == 'Shuaaaaa ... água':
                 MatrizPlayer[linha-1][LpN[coluna]-1] = -2
+                nao_passou = False
             else:
                 MatrizPlayer[linha-1][LpN[coluna]-1] = -1
+                nao_passou = False
         mostra_tabuleiros()
         # Ver se Bot ganhou - Acao = False
     
