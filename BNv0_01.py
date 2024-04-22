@@ -1,4 +1,4 @@
-import random
+import random, time
 
 # Valores e cores do mapa
 # Vazio = Preto = 0
@@ -349,6 +349,13 @@ while game:
             print('Você ganhou!')
             Acao = False
 
+        print(3)
+        time.sleep(1)
+        print(2)
+        time.sleep(1)
+        print(1)
+        time.sleep(1)
+
         # Tiro do Bot
         print('Vez do seu oponente atirar...')
         nao_passou = True
@@ -381,5 +388,4 @@ while game:
         else:
             print('Digitado errado')
 
-# temporizador pra jogada do bot
 # jogar direto 'C4' ao invés de 'C' depois '4'
