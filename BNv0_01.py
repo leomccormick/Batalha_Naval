@@ -92,11 +92,11 @@ while game:
 
     def DefineBarcosBot():
         Matriz = MatrizPadrao
-        for barco in Barcos:
+        for barco in Barcos: # o bot não precisa escolher o país?
             Passou = True
             while Passou:
-                linha = random.choice([0, 1, 2, 3, 4, 5, 6 ,7 ,8 ,9])
-                coluna = random.choice([0, 1, 2, 3, 4, 5, 6 ,7 ,8 ,9])
+                linha = random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+                coluna = random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
                 orientacao = random.choice(['h', 'v'])
                 if orientacao == 'h':
                     OverLap = False
@@ -124,26 +124,27 @@ while game:
         if Matriz[Linha-1][LpN[Coluna]-1] == -1 or Matriz[Linha-1][LpN[Coluna]-1] == -2:
             return 'Isso já foi selecionado'
         elif Matriz[Linha-1][LpN[Coluna]-1] == 0:
-            return 'água'
+            return 'Você acertou na água...'
         elif Matriz[Linha-1][LpN[Coluna]-1] == 1:
-            return 'navio'
+            return 'BOOOOOM! Você acertou um navio'
 
     def DefineBarcos():
         Matriz = MatrizPadrao
         Y = True
         while Y:
-            pais = input('Qual país você quer ser? (Japão, Rússia, Austrália, França, Brasil) : ')
+            pais = input('Qual país você quer ser? (Japão, Rússia, Austrália, França, Brasil): ')
             if pais in LP:
                 Y = False
             else:
                 print('País indisponível')
+        print('Agora vamos posicionar os seus barcos.')
         for barco in PAISES[pais]:
             print('{0} possui {1} de tamanho'.format(barco, Barcos[barco]))
             Passou = True
             while Passou:
                 linha = int(input('Qual linha? (1 - 10) : ')) - 1
                 coluna = LpN[input('Qual linha? (A - J) : ')] - 1
-                orientacao = input('Qual orientação? (h ou v) : ')
+                orientacao = input('Qual orientação? (h ou v): ')
                 if orientacao == 'h':
                     OverLap = False
                     if Barcos[barco] + coluna > 10:
@@ -265,4 +266,4 @@ while game:
         # Ver se Bot ganhou - Acao = False
         #x = 0
     
-    game = input('Jogar novamente? (Sim ou Não) : ') == 'Sim'
+    game = input('Jogar novamente? (Sim ou Não): ') == 'Sim'
