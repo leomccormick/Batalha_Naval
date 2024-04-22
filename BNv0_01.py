@@ -1,9 +1,57 @@
 import random
 
+def mostra_tabuleiros():
+    print(ListaLetras + '     ' + ListaLetras)
+    t = ''
+    for i in range(10):
+        if i <9:
+            t += ' '+str(i+1)
+        else:
+            t += str(i+1)
+        for j in MatrizObservada[i]:
+            if j == 1:
+                t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
+            elif j == 0:
+                t += CORES['black']+'▓▓▓▓▓'+CORES['reset']
+            elif j == -1:
+                t += CORES['red']+'▓▓▓▓▓'+CORES['reset']
+            elif j == -2:
+                t += CORES['blue']+'▓▓▓▓▓'+CORES['reset']
+        if i <9:
+            t += ' '+str(i+1)
+        else:
+            t += str(i+1)
+        t += '     '
+        if i <9:
+            t += ' '+str(i+1)
+        else:
+            t += str(i+1)
+        for j in MatrizPlayer[i]:
+            if j == 1:
+                t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
+            elif j == 0:
+                t += CORES['black']+'▓▓▓▓▓'+CORES['reset']
+            elif j == -1:
+                t += CORES['red']+'▓▓▓▓▓'+CORES['reset']
+            elif j == -2:
+                t += CORES['blue']+'▓▓▓▓▓'+CORES['reset']
+        if i <9:
+            t += ' '+str(i+1)+'\n'
+        else:
+            t += str(i+1)
+    
+    print(t)
+    print(ListaLetras + '     ' + ListaLetras)
+
+def ve_se_ganhou(matriz):
+    for i in matriz:
+        for j in i:
+            if j == 1:
+                return False
+    return True
+
 game = True
-
 while game:
-
 
     LpN = {
     'A' : 1,
@@ -29,6 +77,7 @@ while game:
     'white': '\u001b[37m'
 }
     ListaLetras = 'N   A    B    C    D    E    F    G    H    I    J   N'
+    Letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 
     LP = ['Japão', 'Rússia', 'Austrália', 'França', 'Brasil']
     PAISES =  {
@@ -94,7 +143,7 @@ while game:
         Matriz = MatrizPadrao
         p = random.choice(LP)
         print('O inimigo irá de {0}'.format(p))
-        for barco in PAISES[p]: # o bot não precisa escolher o país?
+        for barco in PAISES[p]: 
             Passou = True
             while Passou:
                 linha = random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -124,7 +173,7 @@ while game:
 
     def Tiro(Matriz, Linha, Coluna):
         if Matriz[Linha-1][LpN[Coluna]-1] == -1 or Matriz[Linha-1][LpN[Coluna]-1] == -2:
-            return 'Isso já foi selecionado'
+            return 'Isso já foi selecionado\nTente novamente'
         elif Matriz[Linha-1][LpN[Coluna]-1] == 0:
             return 'Shuaaaaa ... água'
         elif Matriz[Linha-1][LpN[Coluna]-1] == 1:
@@ -147,7 +196,7 @@ while game:
                 linha = int(input('Qual linha? (1 - 10) : ')) - 1
                 coluna = LpN[input('Qual linha? (A - J) : ')] - 1
                 orientacao = input('Qual orientação? (h ou v): ')
-                if orientacao == 'h':
+                if orientacao == 'h' or orientacao == 'H':
                     OverLap = False
                     if Barcos[barco] + coluna > 10:
                         print('indisponível')
@@ -160,7 +209,7 @@ while game:
                             Passou = False
                             for i in range(Barcos[barco]):
                                 Matriz[linha][coluna+i] = 1
-                elif orientacao == 'v':
+                elif orientacao == 'v' or orientacao == 'V':
                     OverLap = False
                     if Barcos[barco] + linha > 10:
                         print('indisponível')
@@ -222,54 +271,40 @@ while game:
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0]]
     Acao = True
-    print(ListaLetras + '     ' + ListaLetras)
-    t = ''
-    for i in range(10):
-        if i <9:
-            t += ' '+str(i+1)
-        else:
-            t += str(i+1)
-        for j in MatrizObservada[i]:
-            if j == 1:
-                t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
-            elif j == 0:
-                t += CORES['black']+'▓▓▓▓▓'+CORES['reset']
-            elif j == -1:
-                t += CORES['red']+'▓▓▓▓▓'+CORES['reset']
-            elif j == -2:
-                t += CORES['blue']+'▓▓▓▓▓'+CORES['reset']
-        if i <9:
-            t += ' '+str(i+1)
-        else:
-            t += str(i+1)
-        t += '     '
-        if i <9:
-            t += ' '+str(i+1)
-        else:
-            t += str(i+1)
-        for j in MatrizPlayer[i]:
-            if j == 1:
-                t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
-            elif j == 0:
-                t += CORES['black']+'▓▓▓▓▓'+CORES['reset']
-            elif j == -1:
-                t += CORES['red']+'▓▓▓▓▓'+CORES['reset']
-            elif j == -2:
-                t += CORES['blue']+'▓▓▓▓▓'+CORES['reset']
-        if i <9:
-            t += ' '+str(i+1)
-        else:
-            t += str(i+1)
-        t += '\n'
-    print(t)
-    print(ListaLetras + '     ' + ListaLetras)
-    #while Acao:
-        # Mostrar Tabuleiro
+    
+    while Acao:
         # Pedir Tiro
-        # Mostrar Tabuleiro
+        print('Sua vez de atirar!')
+        nao_passou = True
+        while nao_passou:
+            linha = int(input('Escolha uma linha (1-10): '))
+            coluna =  LpN[input('Escolha uma linha (A-J): ')]
+            if Tiro(MatrizBot, linha, coluna) == 'Isso já foi selecionado\nTente novamente':
+                nao_passou = True
+                print('Isso já foi selecionado\nTente novamente')
+            elif Tiro(MatrizBot, linha, coluna) == 'Shuaaaaa ... água':
+                print('Shuaaaaa ... água')
+                MatrizBot[linha-1][LpN[coluna]-1] = -2
+                MatrizObservada[linha-1][LpN[coluna]-1] = -2
+            else:
+                print('BOOOOOM! Um navio foi acertado')
+                MatrizBot[linha-1][LpN[coluna]-1] = -1
+                MatrizObservada[linha-1][LpN[coluna]-1] = -1
+        mostra_tabuleiros()
         # Ver se Player ganhou - Acao = False
         # Tiro do Bot
+        print('Vez do seu oponente atirar...')
+        nao_passou = True
+        while nao_passou:
+            linha = random.choice(range(1, 11))
+            coluna =  random.choice(Letras)
+            if Tiro(MatrizPlayer, linha, coluna) == 'Isso já foi selecionado\nTente novamente':
+                nao_passou = True
+            elif Tiro(MatrizPlayer, linha, coluna) == 'Shuaaaaa ... água':
+                MatrizPlayer[linha-1][LpN[coluna]-1] = -2
+            else:
+                MatrizPlayer[linha-1][LpN[coluna]-1] = -1
+        mostra_tabuleiros()
         # Ver se Bot ganhou - Acao = False
-        #x = 0
     
     game = input('Jogar novamente? (Sim ou Não): ') == 'Sim'
