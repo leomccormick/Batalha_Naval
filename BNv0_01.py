@@ -92,7 +92,9 @@ while game:
 
     def DefineBarcosBot():
         Matriz = MatrizPadrao
-        for barco in Barcos: # o bot não precisa escolher o país?
+        p = random.choice(LP)
+        print('O inimigo será de {0}'.format(p))
+        for barco in PAISES[p]: # o bot não precisa escolher o país?
             Passou = True
             while Passou:
                 linha = random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -124,9 +126,9 @@ while game:
         if Matriz[Linha-1][LpN[Coluna]-1] == -1 or Matriz[Linha-1][LpN[Coluna]-1] == -2:
             return 'Isso já foi selecionado'
         elif Matriz[Linha-1][LpN[Coluna]-1] == 0:
-            return 'Você acertou na água...'
+            return 'Shuaaaaa ... água'
         elif Matriz[Linha-1][LpN[Coluna]-1] == 1:
-            return 'BOOOOOM! Você acertou um navio'
+            return 'BOOOOOM! Um navio foi acertado'
 
     def DefineBarcos():
         Matriz = MatrizPadrao
@@ -220,11 +222,13 @@ while game:
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0]]
     Acao = True
-    for i in range(len(MatrizPlayer)):
+    print(ListaLetras + '     ' + ListaLetras)
+    t = ''
+    for i in range(10):
         if i <9:
-            t = ' '+str(i+1)
+            t += ' '+str(i+1)
         else:
-            t = str(i+1)
+            t += str(i+1)
         for j in MatrizObservada[i]:
             if j == 1:
                 t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
@@ -256,7 +260,8 @@ while game:
             t += ' '+str(i+1)
         else:
             t += str(i+1)
-        print(t)
+    print(t)
+    print(ListaLetras + '     ' + ListaLetras)
     #while Acao:
         # Mostrar Tabuleiro
         # Pedir Tiro
