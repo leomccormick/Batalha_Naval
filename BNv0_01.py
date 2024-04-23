@@ -156,7 +156,7 @@ def DefineBarcosBot(pais_player):
     while pais_certo:
         p = random.choice(LP)
         pais_certo = p == pais_player
-    print('O oponente vai jogar como de {0}'.format(p))
+    print('O oponente vai jogar como {0}'.format(p))
     for barco in PAISES[p]: 
         Passou = True
         while Passou:
@@ -196,24 +196,47 @@ def Tiro(Matriz, Linha, Coluna):
 def DefineBarcos(pais_player):
     Matriz = MatrizPadrao
     print('Agora vamos posicionar os seus barcos.')
+    print(ListaLetras)
+    for i in range(len(MatrizPadrao)):
+        if i <9:
+            t = ' '+str(i+1)
+        else:
+            t = str(i+1)
+        for j in MatrizPadrao[i]:
+            if j == 1:
+                t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
+            elif j == 0:
+                t += CORES['black']+'▓▓▓▓▓'+CORES['reset']
+            elif j == -1:
+                t += CORES['red']+'▓▓▓▓▓'+CORES['reset']
+            elif j == -2:
+                t += CORES['blue']+'▓▓▓▓▓'+CORES['reset']
+        if i <9:
+            t += ' '+str(i+1)
+        else:
+            t += str(i+1)
+        print(t)
+    print(ListaLetras)
     for barco in PAISES[pais_player]:
         print('{0} possui {1} de tamanho'.format(barco, Barcos[barco]))
         Passou = True
         while Passou:
             #linha e coluna
-            errado = True
-            while errado:
+            while True:
                 posicao = input("Escolha onde será a posição (LN): ")
-                linha = int(posicao[1])-1
-                coluna = posicao[0]
-                if len(posicao) == 3:
-                    linha = int(posicao[1] + posicao[2])-1
-                if linha in range(10) and coluna in Letras:
-                    linha = int(linha)
-                    coluna = LpN[coluna[0]]-1
-                    errado = False
-                else:
+                if len(posicao) <2: 
                     print('Digitado errado')
+                else:
+                    linha = posicao[1]
+                    coluna = posicao[0]
+                    if len(posicao) == 3:
+                        linha = posicao[1] + posicao[2]
+                    if linha in ListaNumeros and coluna in Letras:
+                        linha = int(linha)-1
+                        coluna = LpN[coluna[0]]-1
+                        break
+                    else:
+                        print('Digitado errado')
             
             #orientação
             orientacao = input('Qual orientação? (h ou v): ')
@@ -271,11 +294,10 @@ def DefineBarcos(pais_player):
 game = True
 while game:
     # definir pais do player
-    Y = True
-    while Y:
+    while True:
         pais_player = input('Qual país você quer ser? (Japão, Rússia, Austrália, França, Brasil): ')
         if pais_player in LP:
-            Y = False
+            break
         else:
             print('País Indisponível')
 
@@ -303,8 +325,7 @@ while game:
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0]]
     
-    Acao = True
-    while Acao:
+    while True:
         # Pedir Tiro
         print('Sua vez de atirar!')
         nao_passou = True
@@ -312,15 +333,18 @@ while game:
             errado = True
             while errado:
                 tiro = input("Escolha onde será o tiro (LN): ")
-                linha = tiro[1]
-                coluna = tiro[0]
-                if len(tiro) == 3:
-                    linha = tiro[1] + tiro[2]
-                if linha in ListaNumeros and coluna in Letras:
-                    linha = int(linha)
-                    errado = False
-                else:
+                if len(tiro) <2: 
                     print('Digitado errado')
+                else:
+                    linha = tiro[1]
+                    coluna = tiro[0]
+                    if len(tiro) == 3:
+                        linha = tiro[1] + tiro[2]
+                    if linha in ListaNumeros and coluna in Letras:
+                        linha = int(linha)
+                        errado = False
+                    else:
+                        print('Digitado errado')
 
             if Tiro(MatrizBot, linha, coluna) == 'Isso já foi selecionado\nTente novamente':
                 nao_passou = True
@@ -340,45 +364,37 @@ while game:
         # Ver se Player ganhou - Acao = False
         if foi_derrotado(MatrizBot):
             print('Você ganhou!')
-            Acao = False
+            break
 
         # Tiro do Bot
         print('Vez do seu oponente atirar!')
+        time.sleep(1)
         print('Seu oponente está pensando...')
-        print('3...')
         time.sleep(1)
-        print('2...')
-        time.sleep(1)
-        print('1...')
-        time.sleep(1)
-
        
-        nao_passou = True
-        while nao_passou:
+        while True:
             linha = random.choice(range(1, 11))
             coluna =  random.choice(Letras)
-            if Tiro(MatrizPlayer, linha, coluna) == 'Isso já foi selecionado\nTente novamente':
-                nao_passou = True
-            elif Tiro(MatrizPlayer, linha, coluna) == 'Shuaaaaa ... água':
+            if Tiro(MatrizPlayer, linha, coluna) == 'Shuaaaaa ... água':
                 MatrizPlayer[linha-1][LpN[coluna]-1] = -2
-                nao_passou = False
-            else:
+                break
+            elif Tiro(MatrizPlayer, linha, coluna) == 'BOOOOOM! Um navio foi acertado':
                 MatrizPlayer[linha-1][LpN[coluna]-1] = -1
-                nao_passou = False
+                break
         mostra_tabuleiros()
 
         # Ver se Bot ganhou - Acao = False
         if foi_derrotado(MatrizPlayer):
             print('Você perdeu...')
-            Acao = False
+            break
 
-    jogar_novamente = True
-    while jogar_novamente:
+    while True:
         x = input('Jogar novamente? (Sim ou Não): ')
         if x == 'Sim':
-            jogar_novamente = False
+            break
         elif x == 'Não':
-            jogar_novamente = False
             game = False
+            print('Obrigado por jogar!\nDesenvolvido por Felipe Carbonell e Leonardo Veras :)')
+            break
         else:
             print('Digitado errado')
