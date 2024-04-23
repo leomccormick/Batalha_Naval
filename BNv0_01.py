@@ -7,6 +7,7 @@ import random, time
 # Água atingida = Azul = -2
 
 def mostra_tabuleiros():
+    print(' '*(len(ListaLetras)//2) + p + ' '*len(ListaLetras) + pais_player)
     print(ListaLetras + '     ' + ListaLetras)
     t = ''
     for i in range(10):
@@ -150,12 +151,8 @@ MatrizPadrao = [[0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0]]
 
-def DefineBarcosBot(pais_player):
+def DefineBarcosBot(p):
     Matriz = MatrizPadrao
-    pais_certo = True
-    while pais_certo:
-        p = random.choice(LP)
-        pais_certo = p == pais_player
     print('O oponente vai jogar como {0}'.format(p))
     for barco in PAISES[p]: 
         Passou = True
@@ -300,6 +297,10 @@ while game:
             break
         else:
             print('País Indisponível')
+    pais_certo = True
+    while pais_certo:
+        p = random.choice(LP)
+        pais_certo = p == pais_player
     MatrizPadrao = [[0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
