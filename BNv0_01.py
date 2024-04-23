@@ -197,12 +197,12 @@ def DefineBarcos(pais_player):
     Matriz = MatrizPadrao
     print('Agora vamos posicionar os seus barcos.')
     print(ListaLetras)
-    for i in range(len(MatrizPadrao)):
+    for i in range(len(Matriz)):
         if i <9:
             t = ' '+str(i+1)
         else:
             t = str(i+1)
-        for j in MatrizPadrao[i]:
+        for j in Matriz[i]:
             if j == 1:
                 t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
             elif j == 0:
@@ -300,7 +300,16 @@ while game:
             break
         else:
             print('País Indisponível')
-
+    MatrizPadrao = [[0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0]]
     MatrizPlayer = DefineBarcos(pais_player)
     MatrizPadrao = [[0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
