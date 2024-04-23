@@ -407,3 +407,6 @@ while game:
             break
         else:
             print('Digitado errado')
+
+
+# colocar de quem é cada matriz e (tipo matriz player e matriz computador) e qual país cada um escolheu - tipo o exemplo na academia python
