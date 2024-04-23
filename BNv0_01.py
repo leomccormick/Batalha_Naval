@@ -7,7 +7,7 @@ import random, time
 # Água atingida = Azul = -2
 
 def mostra_tabuleiros():
-    print(' '*(len(ListaLetras)//2) + p + ' '*len(ListaLetras) + pais_player)
+    print('                   ' + 'OPONENTE - ' + p + '                                            ' + 'VOCÊ - ' + pais_player)
     print(ListaLetras + '     ' + ListaLetras)
     t = ''
     for i in range(10):
@@ -193,6 +193,7 @@ def Tiro(Matriz, Linha, Coluna):
 def DefineBarcos(pais_player):
     Matriz = MatrizPadrao
     print('Agora vamos posicionar os seus barcos.')
+    time.sleep(0.6)
     print(ListaLetras)
     for i in range(len(Matriz)):
         if i <9:
@@ -215,11 +216,13 @@ def DefineBarcos(pais_player):
         print(t)
     print(ListaLetras)
     for barco in PAISES[pais_player]:
+        time.sleep(0.3)
         print('{0} possui {1} de tamanho'.format(barco, Barcos[barco]))
         Passou = True
         while Passou:
             #linha e coluna
             while True:
+                time.sleep(0.3)
                 posicao = input("Escolha onde será a posição (LN): ")
                 if len(posicao) <2: 
                     print('Digitado errado')
@@ -337,14 +340,15 @@ while game:
     
     while True:
         # Pedir Tiro
+        time.sleep(0.5)
         print('Sua vez de atirar!')
         nao_passou = True
         while nao_passou:
-            errado = True
-            while errado:
+            while True:
                 tiro = input("Escolha onde será o tiro (LN): ")
                 if len(tiro) <2: 
                     print('Digitado errado')
+                    time.sleep(0.3)
                 else:
                     linha = tiro[1]
                     coluna = tiro[0]
@@ -352,10 +356,10 @@ while game:
                         linha = tiro[1] + tiro[2]
                     if linha in ListaNumeros and coluna in Letras:
                         linha = int(linha)
-                        errado = False
+                        break
                     else:
                         print('Digitado errado')
-
+            time.sleep(0.7)
             if Tiro(MatrizBot, linha, coluna) == 'Isso já foi selecionado\nTente novamente':
                 nao_passou = True
                 print('Isso já foi selecionado\nTente novamente')
