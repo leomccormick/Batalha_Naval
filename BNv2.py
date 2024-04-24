@@ -17,7 +17,6 @@ while game:
 
     MatrizPlayer = DefineBarcos(pais_player)
     MatrizBot = DefineBarcosBot(pais_player)
-
     MatrizObservada = [[0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
@@ -30,7 +29,7 @@ while game:
                 [0,0,0,0,0,0,0,0,0,0]]
     
     while True:
-        # Pedir Tiro
+        # Pedir Tiro do usuário
         time.sleep(0.5)
         print('Sua vez de atirar!')
         nao_passou = True
@@ -64,6 +63,7 @@ while game:
                 MatrizBot[linha-1][LpN[coluna]-1] = -1
                 MatrizObservada[linha-1][LpN[coluna]-1] = -1
                 nao_passou = False
+
         mostra_tabuleiros(p, pais_player, MatrizObservada, MatrizPlayer)
 
         # Ver se Player ganhou - Acao = False
@@ -76,7 +76,6 @@ while game:
         time.sleep(1)
         print('Seu oponente está pensando...')
         time.sleep(1)
-       
         while True:
             linha = random.choice(range(1, 11))
             coluna =  random.choice(Letras)
@@ -86,6 +85,7 @@ while game:
             elif Tiro(MatrizPlayer, linha, coluna) == 'BOOOOOM! Um navio foi acertado':
                 MatrizPlayer[linha-1][LpN[coluna]-1] = -1
                 break
+
         mostra_tabuleiros(p, pais_player, MatrizObservada, MatrizPlayer)
 
         # Ver se Bot ganhou - Acao = False
