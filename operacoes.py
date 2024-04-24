@@ -71,7 +71,16 @@ def ve_se_ganhou(matriz):
     return True
 
 def DefineBarcosBot(p):
-    Matriz = MatrizPadrao
+    Matriz = [[0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0]]
     print('O oponente vai jogar como {0}'.format(p))
     for barco in PAISES[p]: 
         Passou = True
@@ -110,7 +119,16 @@ def Tiro(Matriz, Linha, Coluna):
         return 'BOOOOOM! Um navio foi acertado'
 
 def DefineBarcos(pais_player):
-    Matriz = MatrizPadrao
+    Matriz = [[0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0]]
     print('Agora vamos posicionar os seus barcos.')
     time.sleep(0.6)
     print(ListaLetras)
