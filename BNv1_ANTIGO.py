@@ -1,3 +1,5 @@
+# Esse arquivo possui todo o codigo necessário para o jogo, sem importar outros arquivos
+
 import random, time
 
 # Valores e cores do mapa
