@@ -24,6 +24,7 @@ n_barco = {
 
 indices_barcos = [1, 2, 3, 4, 5, 6]
 
+# Tamanho dos barcos
 Barcos = {
 'Destroyer': 3,
 'Porta-avioes': 5,
@@ -33,6 +34,7 @@ Barcos = {
 'Couraçado': 4
 }
 
+# Frota de cada país com a qnt de barcos
 PAISES =  {
     'Brasil': {
     'Cruzador': 1,
@@ -75,6 +77,7 @@ ListaLetras = 'N   A    B    C    D    E    F    G    H    I    J   N'
 Letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 ListaNumeros = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
+# Lista de países
 LP = ['Japão', 'Rússia', 'Austrália', 'França', 'Brasil']
 
 LpN = {

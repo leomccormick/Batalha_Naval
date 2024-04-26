@@ -12,7 +12,7 @@ MatrizPadrao = [[0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0]]
 
-def mostra_tabuleiros(p, pais_player, MatrizObservada, MatrizPlayer):
+def mostra_tabuleiros(p: str, pais_player: str, MatrizObservada: list, MatrizPlayer: list) -> None:
     print('                   ' + 'OPONENTE - ' + p + '                                            ' + 'VOCÊ - ' + pais_player)
     print(ListaLetras + '     ' + ListaLetras)
     t = ''
@@ -56,21 +56,21 @@ def mostra_tabuleiros(p, pais_player, MatrizObservada, MatrizPlayer):
     print(t)
     print(ListaLetras + '     ' + ListaLetras)
 
-def foi_derrotado(m):
+def foi_derrotado(m: list) -> bool:
     for i in m:
         for j in i:
             if j == 1:
                 return False
     return True
 
-def ve_se_ganhou(matriz):
+def ve_se_ganhou(matriz: list) -> bool:
     for i in matriz:
         for j in i:
             if j == 1:
                 return False
     return True
 
-def DefineBarcosBot(p):
+def defineBarcosBot(p: str) -> list:
     Matriz = [[0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
@@ -84,39 +84,48 @@ def DefineBarcosBot(p):
     print('O oponente vai jogar como {0}'.format(p))
     for barco in PAISES[p]: 
         for i in range(PAISES[p][barco]):
-            Passou = True
-            while Passou:
+            while True:
                 linha = random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
                 coluna = random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
                 orientacao = random.choice(['h', 'v'])
+                int_barco = indices[barco]
+                while True:
+                    encontrou_barco = False
+                    for i in Matriz:
+                        if int_barco in i:
+                            int_barco = int_barco * 10
+                            encontrou_barco = True
+                            break
+                    if not encontrou_barco:
+                        break
                 if orientacao == 'h':
                     OverLap = False
                     if Barcos[barco] + coluna <= 10:
                         for i in range(Barcos[barco]):
                             if Matriz[linha][coluna+i] != 0:
                                 OverLap = True
-                        if OverLap == False:
-                            Passou = False
+                        if not OverLap:
                             for i in range(Barcos[barco]):
-                                Matriz[linha][coluna+i] = indices[barco]
+                                Matriz[linha][coluna+i] = int_barco
+                            break
                 elif orientacao == 'v':
                     OverLap = False
                     if Barcos[barco] + linha <= 10:
                         for i in range(Barcos[barco]):
                             if Matriz[linha+i][coluna] != 0:
                                 OverLap = True
-                        if OverLap == False:
-                            Passou = False
+                        if not OverLap:
                             for i in range(Barcos[barco]):
-                                Matriz[linha+i][coluna] = indices[barco]
+                                Matriz[linha+i][coluna] = int_barco
+                            break
     return Matriz
 
-def Tiro(Matriz, Linha, Coluna):
+def tiro(Matriz: list, Linha: int, Coluna: str) -> str:
     if Matriz[Linha-1][LpN[Coluna]-1] == -1 or Matriz[Linha-1][LpN[Coluna]-1] == -2:
         return 'Isso já foi selecionado\nTente novamente'
     elif Matriz[Linha-1][LpN[Coluna]-1] == 0:
         return 'Shuaaaaa ... água'
-    elif Matriz[Linha-1][LpN[Coluna]-1] == 1:
+    else:
         return 'BOOOOOM! Um navio foi acertado'
     
 def barcoRestante(matriz: list, tipo_barco: int) -> bool:
@@ -125,7 +134,7 @@ def barcoRestante(matriz: list, tipo_barco: int) -> bool:
             return True
     return False
 
-def DefineBarcos(pais_player):
+def defineBarcos(pais_player: str) -> list:
     Matriz = [[0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
@@ -194,7 +203,7 @@ def DefineBarcos(pais_player):
                             if Matriz[linha][coluna+i] != 0:
                                 print('Indisponível')
                                 OverLap = True
-                        if OverLap == False:
+                        if not OverLap:
                             Passou = False
                             for i in range(Barcos[barco]):
                                 Matriz[linha][coluna+i] = 1
@@ -207,7 +216,7 @@ def DefineBarcos(pais_player):
                             if Matriz[linha+i][coluna] != 0:
                                 print('Indisponível')
                                 OverLap = True
-                        if OverLap == False:
+                        if not OverLap:
                             Passou = False
                             for i in range(Barcos[barco]):
                                 Matriz[linha+i][coluna] = 1
