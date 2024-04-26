@@ -60,9 +60,13 @@ while game:
                 nao_passou = False
             else:
                 print('BOOOOOM! Um navio foi acertado')
+                tipo_barco = MatrizBot[linha-1][LpN[coluna]-1]
                 MatrizBot[linha-1][LpN[coluna]-1] = -1
                 MatrizObservada[linha-1][LpN[coluna]-1] = -1
                 nao_passou = False
+                if not barcoRestante(MatrizBot, tipo_barco):
+                    print('Você afundou o barco {0}'.format(n_barco[tipo_barco]))
+                        
 
         mostra_tabuleiros(p, pais_player, MatrizObservada, MatrizPlayer)
 

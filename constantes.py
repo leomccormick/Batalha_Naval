@@ -4,6 +4,35 @@
 # Barco atingido = Vermelho = -1
 # Água atingida = Azul = -2
 
+indices = {
+'Destroyer': 1,
+'Porta-avioes': 2,
+'Submarino': 3,
+'Torpedeiro': 4,
+'Cruzador': 5,
+'Couraçado': 6 
+}
+
+n_barco = {
+1: 'Destroyer',
+2: 'Porta-avioes',
+3: 'Submarino',
+4: 'Torpedeiro',
+5: 'Cruzador',
+6: 'Couraçado',
+}
+
+indices_barcos = [1, 2, 3, 4, 5, 6]
+
+Barcos = {
+'Destroyer': 3,
+'Porta-avioes': 5,
+'Submarino': 2,
+'Torpedeiro': 3,
+'Cruzador': 2,
+'Couraçado': 4
+}
+
 PAISES =  {
     'Brasil': {
     'Cruzador': 1,
@@ -40,15 +69,6 @@ PAISES =  {
     'Couraçado': 1,
     'Submarino': 1
     }
-}
-
-Barcos = {
-'Destroyer': 3,
-'Porta-avioes': 5,
-'Submarino': 2,
-'Torpedeiro': 3,
-'Cruzador': 2,
-'Couraçado': 4
 }
 
 ListaLetras = 'N   A    B    C    D    E    F    G    H    I    J   N'

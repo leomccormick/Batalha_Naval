@@ -22,7 +22,7 @@ def mostra_tabuleiros(p, pais_player, MatrizObservada, MatrizPlayer):
         else:
             t += str(i+1)
         for j in MatrizObservada[i]:
-            if j == 1:
+            if j in indices_barcos:
                 t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
             elif j == 0:
                 t += CORES['black']+'▓▓▓▓▓'+CORES['reset']
@@ -40,7 +40,7 @@ def mostra_tabuleiros(p, pais_player, MatrizObservada, MatrizPlayer):
         else:
             t += str(i+1)
         for j in MatrizPlayer[i]:
-            if j == 1:
+            if j in indices_barcos:
                 t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
             elif j == 0:
                 t += CORES['black']+'▓▓▓▓▓'+CORES['reset']
@@ -83,31 +83,32 @@ def DefineBarcosBot(p):
             [0,0,0,0,0,0,0,0,0,0]]
     print('O oponente vai jogar como {0}'.format(p))
     for barco in PAISES[p]: 
-        Passou = True
-        while Passou:
-            linha = random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-            coluna = random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-            orientacao = random.choice(['h', 'v'])
-            if orientacao == 'h':
-                OverLap = False
-                if Barcos[barco] + coluna <= 10:
-                    for i in range(Barcos[barco]):
-                        if Matriz[linha][coluna+i] != 0:
-                            OverLap = True
-                    if OverLap == False:
-                        Passou = False
+        for i in range(PAISES[p][barco]):
+            Passou = True
+            while Passou:
+                linha = random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+                coluna = random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+                orientacao = random.choice(['h', 'v'])
+                if orientacao == 'h':
+                    OverLap = False
+                    if Barcos[barco] + coluna <= 10:
                         for i in range(Barcos[barco]):
-                            Matriz[linha][coluna+i] = 1
-            elif orientacao == 'v':
-                OverLap = False
-                if Barcos[barco] + linha <= 10:
-                    for i in range(Barcos[barco]):
-                        if Matriz[linha+i][coluna] != 0:
-                            OverLap = True
-                    if OverLap == False:
-                        Passou = False
+                            if Matriz[linha][coluna+i] != 0:
+                                OverLap = True
+                        if OverLap == False:
+                            Passou = False
+                            for i in range(Barcos[barco]):
+                                Matriz[linha][coluna+i] = indices[barco]
+                elif orientacao == 'v':
+                    OverLap = False
+                    if Barcos[barco] + linha <= 10:
                         for i in range(Barcos[barco]):
-                            Matriz[linha+i][coluna] = 1
+                            if Matriz[linha+i][coluna] != 0:
+                                OverLap = True
+                        if OverLap == False:
+                            Passou = False
+                            for i in range(Barcos[barco]):
+                                Matriz[linha+i][coluna] = indices[barco]
     return Matriz
 
 def Tiro(Matriz, Linha, Coluna):
@@ -117,6 +118,12 @@ def Tiro(Matriz, Linha, Coluna):
         return 'Shuaaaaa ... água'
     elif Matriz[Linha-1][LpN[Coluna]-1] == 1:
         return 'BOOOOOM! Um navio foi acertado'
+    
+def barcoRestante(matriz: list, tipo_barco: int) -> bool:
+    for i in matriz:
+        if tipo_barco in i:
+            return True
+    return False
 
 def DefineBarcos(pais_player):
     Matriz = [[0,0,0,0,0,0,0,0,0,0],
@@ -153,77 +160,78 @@ def DefineBarcos(pais_player):
         print(t)
     print(ListaLetras)
     for barco in PAISES[pais_player]:
-        time.sleep(0.3)
-        print('{0} possui {1} de tamanho'.format(barco, Barcos[barco]))
-        Passou = True
-        while Passou:
-            #linha e coluna
-            while True:
-                time.sleep(0.3)
-                posicao = input("Escolha onde será a posição (LN): ")
-                if len(posicao) <2: 
-                    print('Digitado errado')
-                else:
-                    linha = posicao[1]
-                    coluna = posicao[0]
-                    if len(posicao) == 3:
-                        linha = posicao[1] + posicao[2]
-                    if linha in ListaNumeros and coluna in Letras:
-                        linha = int(linha)-1
-                        coluna = LpN[coluna[0]]-1
-                        break
-                    else:
+        for i in range(PAISES[pais_player][barco]):
+            time.sleep(0.3)
+            print('{0} possui {1} de tamanho'.format(barco, Barcos[barco]))
+            Passou = True
+            while Passou:
+                #linha e coluna
+                while True:
+                    time.sleep(0.3)
+                    posicao = input("Escolha onde será a posição (LN): ")
+                    if len(posicao) <2: 
                         print('Digitado errado')
-            
-            #orientação
-            orientacao = input('Qual orientação? (h ou v): ')
-            if orientacao == 'h' or orientacao == 'H':
-                OverLap = False
-                if Barcos[barco] + coluna > 10:
-                    print('Indisponível')
-                else:
-                    for i in range(Barcos[barco]):
-                        if Matriz[linha][coluna+i] != 0:
-                            print('Indisponível')
-                            OverLap = True
-                    if OverLap == False:
-                        Passou = False
+                    else:
+                        linha = posicao[1]
+                        coluna = posicao[0]
+                        if len(posicao) == 3:
+                            linha = posicao[1] + posicao[2]
+                        if linha in ListaNumeros and coluna in Letras:
+                            linha = int(linha)-1
+                            coluna = LpN[coluna[0]]-1
+                            break
+                        else:
+                            print('Digitado errado')
+                
+                #orientação
+                orientacao = input('Qual orientação? (h ou v): ')
+                if orientacao == 'h' or orientacao == 'H':
+                    OverLap = False
+                    if Barcos[barco] + coluna > 10:
+                        print('Indisponível')
+                    else:
                         for i in range(Barcos[barco]):
-                            Matriz[linha][coluna+i] = 1
-            elif orientacao == 'v' or orientacao == 'V':
-                OverLap = False
-                if Barcos[barco] + linha > 10:
-                    print('Indisponível')
-                else:
-                    for i in range(Barcos[barco]):
-                        if Matriz[linha+i][coluna] != 0:
-                            print('Indisponível')
-                            OverLap = True
-                    if OverLap == False:
-                        Passou = False
+                            if Matriz[linha][coluna+i] != 0:
+                                print('Indisponível')
+                                OverLap = True
+                        if OverLap == False:
+                            Passou = False
+                            for i in range(Barcos[barco]):
+                                Matriz[linha][coluna+i] = 1
+                elif orientacao == 'v' or orientacao == 'V':
+                    OverLap = False
+                    if Barcos[barco] + linha > 10:
+                        print('Indisponível')
+                    else:
                         for i in range(Barcos[barco]):
-                            Matriz[linha+i][coluna] = 1
-            else:
-                print('Digitado errado')
-        print(ListaLetras)
-        for i in range(len(Matriz)):
-            if i <9:
-                t = ' '+str(i+1)
-            else:
-                t = str(i+1)
-            for j in Matriz[i]:
-                if j == 1:
-                    t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
-                elif j == 0:
-                    t += CORES['black']+'▓▓▓▓▓'+CORES['reset']
-                elif j == -1:
-                    t += CORES['red']+'▓▓▓▓▓'+CORES['reset']
-                elif j == -2:
-                    t += CORES['blue']+'▓▓▓▓▓'+CORES['reset']
-            if i <9:
-                t += ' '+str(i+1)
-            else:
-                t += str(i+1)
-            print(t)
-        print(ListaLetras)
+                            if Matriz[linha+i][coluna] != 0:
+                                print('Indisponível')
+                                OverLap = True
+                        if OverLap == False:
+                            Passou = False
+                            for i in range(Barcos[barco]):
+                                Matriz[linha+i][coluna] = 1
+                else:
+                    print('Digitado errado')
+            print(ListaLetras)
+            for i in range(len(Matriz)):
+                if i <9:
+                    t = ' '+str(i+1)
+                else:
+                    t = str(i+1)
+                for j in Matriz[i]:
+                    if j == 1:
+                        t += CORES['green']+'▓▓▓▓▓'+CORES['reset']
+                    elif j == 0:
+                        t += CORES['black']+'▓▓▓▓▓'+CORES['reset']
+                    elif j == -1:
+                        t += CORES['red']+'▓▓▓▓▓'+CORES['reset']
+                    elif j == -2:
+                        t += CORES['blue']+'▓▓▓▓▓'+CORES['reset']
+                if i <9:
+                    t += ' '+str(i+1)
+                else:
+                    t += str(i+1)
+                print(t)
+            print(ListaLetras)
     return Matriz
