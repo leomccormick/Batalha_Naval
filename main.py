@@ -12,13 +12,11 @@ while game:
             print('País Indisponível')
     pais_certo = True
     while pais_certo:
-        pais_bot = random.choice(LP)
-        pais_certo = pais_bot == pais_player
+        p = random.choice(LP)
+        pais_certo = p == pais_player
 
     MatrizPlayer = defineBarcos(pais_player)
-    MatrizBot = defineBarcosBot(pais_bot)
-    # Para testes:
-    # print(MatrizBot)
+    MatrizBot = defineBarcosBot(pais_player)
     MatrizObservada = [[0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
@@ -31,54 +29,49 @@ while game:
                 [0,0,0,0,0,0,0,0,0,0]]
     
     while True:
-        # Pedir tiro do usuário
+        # Pedir Tiro do usuário
         time.sleep(0.5)
         print('Sua vez de atirar!')
-        while True:
+        nao_passou = True
+        while nao_passou:
             while True:
-                tiro_player = input("Escolha onde será o tiro (LN): ")
-                if len(tiro_player) <2: 
+                tiro = input("Escolha onde será o tiro (LN): ")
+                if len(tiro) <2: 
                     print('Digitado errado')
                     time.sleep(0.3)
                 else:
-                    linha = tiro_player[1]
-                    coluna = tiro_player[0]
-                    if len(tiro_player) == 3:
-                        linha = tiro_player[1] + tiro_player[2]
+                    linha = tiro[1]
+                    coluna = tiro[0]
+                    if len(tiro) == 3:
+                        linha = tiro[1] + tiro[2]
                     if linha in ListaNumeros and coluna in Letras:
                         linha = int(linha)
                         break
                     else:
                         print('Digitado errado')
             time.sleep(0.7)
-            print(MatrizBot)
-            print()
             if tiro(MatrizBot, linha, coluna) == 'Isso já foi selecionado\nTente novamente':
+                nao_passou = True
                 print('Isso já foi selecionado\nTente novamente')
             elif tiro(MatrizBot, linha, coluna) == 'Shuaaaaa ... água':
                 print('Shuaaaaa ... água')
                 MatrizBot[linha-1][LpN[coluna]-1] = -2
                 MatrizObservada[linha-1][LpN[coluna]-1] = -2
-                break
+                nao_passou = False
             else:
                 print('BOOOOOM! Um navio foi acertado')
-                tipo_barco = MatrizBot[linha-1][LpN[coluna]-1]
                 MatrizBot[linha-1][LpN[coluna]-1] = -1
                 MatrizObservada[linha-1][LpN[coluna]-1] = -1
-                if not barcoRestante(MatrizBot, tipo_barco):
-                    print('Você afundou um {0}!'.format(n_barco[int(str(tipo_barco)[0])]))
-                    time.sleep(2)
-                break
-                        
+                nao_passou = False
 
-        mostra_tabuleiros(pais_bot, pais_player, MatrizObservada, MatrizPlayer)
+        mostra_tabuleiros(p, pais_player, MatrizObservada, MatrizPlayer)
 
         # Ver se Player ganhou - Acao = False
         if foi_derrotado(MatrizBot):
             print('Você ganhou!')
             break
 
-        # tiro do Bot
+        # Tiro do Bot
         print('Vez do seu oponente atirar!')
         time.sleep(1)
         print('Seu oponente está pensando...')
@@ -93,7 +86,7 @@ while game:
                 MatrizPlayer[linha-1][LpN[coluna]-1] = -1
                 break
 
-        mostra_tabuleiros(pais_bot, pais_player, MatrizObservada, MatrizPlayer)
+        mostra_tabuleiros(p, pais_player, MatrizObservada, MatrizPlayer)
 
         # Ver se Bot ganhou - Acao = False
         if foi_derrotado(MatrizPlayer):
