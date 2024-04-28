@@ -1,6 +1,11 @@
 import random, time
 from constantes import *
 
+def agua():
+    splash.play()
+def boom():
+    BOOM.play()
+
 MatrizPadrao = [[0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0],
@@ -120,7 +125,7 @@ def defineBarcosBot(p: str) -> list:
                             break
     return Matriz
 
-def tiro(Matriz: list, Linha: int, Coluna: str) -> str:
+def tiros(Matriz: list, Linha: int, Coluna: str) -> str:
     if Matriz[Linha-1][LpN[Coluna]-1] == -1 or Matriz[Linha-1][LpN[Coluna]-1] == -2:
         return 'Isso já foi selecionado\nTente novamente'
     elif Matriz[Linha-1][LpN[Coluna]-1] == 0:

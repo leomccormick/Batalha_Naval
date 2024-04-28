@@ -3,6 +3,12 @@
 # Barco existente = Verde = 1
 # Barco atingido = Vermelho = -1
 # Água atingida = Azul = -2
+from pygame import mixer
+
+mixer.init()
+
+BOOM = mixer.Sound("Explosao.mp3")
+splash = mixer.Sound("Splash.mp3")
 
 indices = {
 'Destroyer': 1,

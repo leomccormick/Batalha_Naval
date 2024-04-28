@@ -50,15 +50,17 @@ while game:
                     else:
                         print('Digitado errado')
             time.sleep(0.7)
-            if tiro(MatrizBot, linha, coluna) == 'Isso já foi selecionado\nTente novamente':
+            if tiros(MatrizBot, linha, coluna) == 'Isso já foi selecionado\nTente novamente':
                 nao_passou = True
                 print('Isso já foi selecionado\nTente novamente')
-            elif tiro(MatrizBot, linha, coluna) == 'Shuaaaaa ... água':
+            elif tiros(MatrizBot, linha, coluna) == 'Shuaaaaa ... água':
+                agua()
                 print('Shuaaaaa ... água')
                 MatrizBot[linha-1][LpN[coluna]-1] = -2
                 MatrizObservada[linha-1][LpN[coluna]-1] = -2
                 nao_passou = False
             else:
+                boom()
                 print('BOOOOOM! Um navio foi acertado')
                 MatrizBot[linha-1][LpN[coluna]-1] = -1
                 MatrizObservada[linha-1][LpN[coluna]-1] = -1
@@ -79,10 +81,10 @@ while game:
         while True:
             linha = random.choice(range(1, 11))
             coluna =  random.choice(Letras)
-            if tiro(MatrizPlayer, linha, coluna) == 'Shuaaaaa ... água':
+            if tiros(MatrizPlayer, linha, coluna) == 'Shuaaaaa ... água':
                 MatrizPlayer[linha-1][LpN[coluna]-1] = -2
                 break
-            elif tiro(MatrizPlayer, linha, coluna) == 'BOOOOOM! Um navio foi acertado':
+            elif tiros(MatrizPlayer, linha, coluna) == 'BOOOOOM! Um navio foi acertado':
                 MatrizPlayer[linha-1][LpN[coluna]-1] = -1
                 break
 
