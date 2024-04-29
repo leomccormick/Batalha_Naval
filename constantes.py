@@ -30,6 +30,8 @@ n_barco = {
 
 indices_barcos = [1, 2, 3, 4, 5, 6]
 
+indices_possiveis = [1, 2, 3, 4, 5, 6, 1*10, 2*10, 3*10, 4*10, 5*10, 6*10, 1*100, 2*100, 3*100, 4*100, 5*100, 6*100]
+
 # Tamanho dos barcos
 Barcos = {
 'Destroyer': 3,

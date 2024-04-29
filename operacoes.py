@@ -64,14 +64,14 @@ def mostra_tabuleiros(p: str, pais_player: str, MatrizObservada: list, MatrizPla
 def foi_derrotado(m: list) -> bool:
     for i in m:
         for j in i:
-            if j == 1:
+            if j in indices_possiveis:
                 return False
     return True
 
 def ve_se_ganhou(matriz: list) -> bool:
     for i in matriz:
         for j in i:
-            if j == 1:
+            if j in indices_possiveis:
                 return False
     return True
 
@@ -125,7 +125,7 @@ def defineBarcosBot(p: str) -> list:
                             break
     return Matriz
 
-def tiros(Matriz: list, Linha: int, Coluna: str) -> str:
+def tiro(Matriz: list, Linha: int, Coluna: str) -> str:
     if Matriz[Linha-1][LpN[Coluna]-1] == -1 or Matriz[Linha-1][LpN[Coluna]-1] == -2:
         return 'Isso já foi selecionado\nTente novamente'
     elif Matriz[Linha-1][LpN[Coluna]-1] == 0:
